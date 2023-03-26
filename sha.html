@@ -8,13 +8,17 @@
     body {
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .container {
       text-align: center;
+      width: 100%;
     }
     input[type="text"] {
       width: 100%;
@@ -38,12 +42,23 @@
       border-radius: 4px;
     }
   </style>
+  <script>
+    function handleInputFocus() {
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0');
+    }
+
+    function handleInputBlur() {
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <h1>SHA256 Hash Generator</h1>
     <label for="input-text">Enter text:</label>
-    <input type="text" id="input-text" oninput="updateHash()">
+    <input type="text" id="input-text" oninput="updateHash()" onfocus="handleInputFocus()" onblur="handleInputBlur()">
     <h2>SHA256 Hash:</h2>
     <p id="output-hash"></p>
     <button id="copy-button" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
@@ -75,9 +90,9 @@
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      alert('SHA256 hash copied to clipboard!');
     }
   </script>
 </body>
 </html>
+
 
