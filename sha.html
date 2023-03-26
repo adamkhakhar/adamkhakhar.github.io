@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHA256 Hash Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SHA256 Hash Generator</h1>
+    <label for="input-text">Enter text:</label>
+    <input type="text" id="input-text" oninput="updateHash()">
+    <h2>SHA256 Hash:</h2>
+    <p id="output-hash"></p>
+    <button id="copy-button" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
+  </div>
+  <script>
+    async function updateHash() {
+      const inputText = document.getElementById('input-text').value;
+      const outputHash = document.getElementById('output-hash');
+      const copyButton = document.getElementById('copy-button');
+      if (inputText) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(inputText);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        outputHash.innerText = hashHex;
+        copyButton.disabled = false;
+      } else {
+        outputHash.innerText = '';
+        copyButton.disabled = true;
+      }
+    }
+
+    function copyToClipboard() {
+      const outputHash = document.getElementById('output-hash');
+      const textarea = document.createElement('textarea');
+      textarea.value = outputHash.innerText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert('SHA256 hash copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
+
