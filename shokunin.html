@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shokunin Video</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #000;
+                color: #fff;
+            }
+            video {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+    </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TG9308YN57"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TG9308YN57');
+    </script>
+    <body>
+        <video controls autoplay>
+            <source src="shokunin.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </body>
+</html>
